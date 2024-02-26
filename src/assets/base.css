@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+.page__body {
+  height: 100dvh;
+  line-height: 1.6;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  padding: 48px 52px 24px 52px;
+  position: relative;
+  display: flex;
+}
+
+.page__main {
+  display: flex;
+  height: 100%;
+}
