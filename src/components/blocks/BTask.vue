@@ -1,28 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useStateStore } from '@/stores/stateStore'
 const stateStore = useStateStore()
 import UMenuButton from '../ui/UMenuButton.vue'
 import UClearButton from '../ui/UClearButton.vue'
 import USaveButton from '../ui/USaveButton.vue'
 import BOverlay from './BOverlay.vue'
-import UContextMenu from '../ui/UContextMenu.vue'
 import UTextArea from '../ui/UTextArea.vue'
-
-const showContextMenu = (event, taskId) => {
-  stateStore.showContextMenu(event.target.getBoundingClientRect(), taskId)
-}
-const hideContextMenu = () => {
-  stateStore.hideContextMenu()
-}
-
-const save = () => {
-  stateStore.toggleTaskEditeble()
-}
-
-const clear = () => {
-  text.value = ''
-}
 
 const props = defineProps({
   data: {
@@ -30,43 +14,51 @@ const props = defineProps({
     default: () => ''
   },
   taskId: {
-    type: Number
+    type: Number,
+    required: true
+  },
+  columnId: {
+    type: Number,
+    required: true
   }
 })
-const text = ref(props.data)
+const textAreaDataValue = ref(props.data)
+
+const isEditebleAndEquilTask = computed(
+  () => stateStore.taskEditeble && props.taskId === stateStore.activeTaskId
+)
+const showContextMenu = (event, taskId, columnId) => {
+  stateStore.showContextMenu(event.target.getBoundingClientRect(), taskId, columnId)
+}
+const hideContextMenu = () => {
+  stateStore.hideContextMenu()
+}
+
+const saveTaskChanges = () => {
+  stateStore.toggleTaskEditeble()
+}
+
+const clearTaskDataValue = () => {
+  textAreaDataValue.value = ''
+}
 </script>
 
 <template>
-  <div
-    class="task"
-    :class="{ 'task--edit': stateStore.taskEditeble && taskId === stateStore.activeTaskId }"
-  >
-    <!-- <div
-      class="task__data"
-      :contenteditable="stateStore.taskEditeble && taskId === stateStore.activeTaskId"
-    >
-      {{ data }}
-    </div> -->
+  <div class="task" :class="{ 'task--edit': isEditebleAndEquilTask }">
     <UTextArea
-      v-model="text"
-      :data-value="text"
+      v-model="textAreaDataValue"
+      :data-value="textAreaDataValue"
       :readonly="!stateStore.taskEditeble"
       placeholder="Введите текст..."
     />
     <div class="task__button">
       <UMenuButton
         class="task__menu"
-        @click.stop="showContextMenu($event, taskId)"
+        @click.stop="showContextMenu($event, taskId, columnId)"
         v-if="!stateStore.taskEditeble"
       />
-      <UClearButton
-        v-if="stateStore.taskEditeble && taskId === stateStore.activeTaskId"
-        @click.stop="clear"
-      />
-      <USaveButton
-        v-if="stateStore.taskEditeble && taskId === stateStore.activeTaskId"
-        @click.stop="save"
-      />
+      <UClearButton v-if="isEditebleAndEquilTask" @click.stop="clearTaskDataValue" />
+      <USaveButton v-if="isEditebleAndEquilTask" @click.stop="saveTaskChanges" />
     </div>
 
     <BOverlay @click="hideContextMenu" v-if="stateStore.contextMenu.show" />

@@ -1,8 +1,14 @@
 <script setup>
 import { useStateStore } from '@/stores/stateStore'
+import { useBoardStore } from '@/stores/boardStore'
 const stateStore = useStateStore()
-const onEdit = () => {
+const boardStore = useBoardStore()
+const makeEdit = () => {
   stateStore.toggleTaskEditeble()
+  stateStore.hideContextMenu()
+}
+const deleteTask = () => {
+  boardStore.deleteTask()
   stateStore.hideContextMenu()
 }
 const props = defineProps({
@@ -19,11 +25,11 @@ const props = defineProps({
 
 <template>
   <ul class="contextmenu" :style="{ top: y + 'px', left: x + 'px' }">
-    <li class="contextmenu__item" @click.stop="onEdit">
+    <li class="contextmenu__item" @click.stop="makeEdit">
       <img src="@/assets/icn/icn-edit.svg" alt="edit" />
       Редактировать
     </li>
-    <li class="contextmenu__item">
+    <li class="contextmenu__item" @click.stop="deleteTask">
       <img src="@/assets/icn/icn-trash.svg" alt="edit" />
       Удалить
     </li>
