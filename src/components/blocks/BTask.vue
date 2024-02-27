@@ -1,7 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useStateStore } from '@/stores/stateStore'
+import { useTooltipStore } from '@/stores/tooltipStore'
 const stateStore = useStateStore()
+const tooltipStore = useTooltipStore()
 import BOverlay from './BOverlay.vue'
 import UTextArea from '../ui/UTextArea.vue'
 import UIconButton from '../ui/UIconButton.vue'
@@ -19,6 +21,10 @@ const props = defineProps({
   columnId: {
     type: Number,
     required: true
+  },
+  columnTitle: {
+    type: String,
+    required: true
   }
 })
 const textAreaDataValue = ref(props.data)
@@ -26,8 +32,14 @@ const textAreaDataValue = ref(props.data)
 const isEditebleAndEquilTask = computed(
   () => stateStore.taskEditeble && props.taskId === stateStore.activeTaskId
 )
-const showContextMenu = (event, taskId, columnId, taskData) => {
-  stateStore.showContextMenu(event.target.getBoundingClientRect(), taskId, columnId, taskData)
+const showContextMenu = (event, taskId, columnId, taskData, columnTitle) => {
+  stateStore.showContextMenu(
+    event.target.getBoundingClientRect(),
+    taskId,
+    columnId,
+    taskData,
+    columnTitle
+  )
 }
 const hideContextMenu = () => {
   stateStore.hideContextMenu()
@@ -36,6 +48,7 @@ const hideContextMenu = () => {
 const saveTaskChanges = () => {
   stateStore.toggleTaskEditeble()
   stateStore.setActiveTaskData(textAreaDataValue.value)
+  tooltipStore.showTooltip('Задача создана/отредактированна в')
 }
 
 const clearTaskDataValue = () => {
@@ -54,7 +67,7 @@ const clearTaskDataValue = () => {
     <div class="task__button">
       <UIconButton
         class="menu-button"
-        @click.stop="showContextMenu($event, taskId, columnId, data)"
+        @click.stop="showContextMenu($event, taskId, columnId, data, columnTitle)"
         v-if="!isEditebleAndEquilTask"
       >
         <template #iconButton>

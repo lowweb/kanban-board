@@ -6,15 +6,17 @@ export const useStateStore = defineStore('stateStore', () => {
   const activeTaskId = ref()
   const activeColumnId = ref()
   const activeTaskData = ref()
+  const activeColumnTitle = ref()
   const taskEditeble = ref(false)
   const isNewTaskEdit = ref(false)
   const editText = ref()
 
-  const showContextMenu = (el, taskId, columnId, taskData) => {
+  const showContextMenu = (el, taskId, columnId, taskData, columnTitle) => {
     contextMenu.value.show = true
     contextMenu.value.x = el.left
     contextMenu.value.y = el.top + 20
     setActiveColumnId(columnId)
+    setActiveColumnTitle(columnTitle)
     setActiveTaskId(taskId)
     setActiveTaskData(taskData)
   }
@@ -37,6 +39,9 @@ export const useStateStore = defineStore('stateStore', () => {
   const setActiveTaskData = (data) => {
     activeTaskData.value = data
   }
+  const setActiveColumnTitle = (data) => {
+    activeColumnTitle.value = data
+  }
 
   return {
     contextMenu,
@@ -52,6 +57,8 @@ export const useStateStore = defineStore('stateStore', () => {
     toggleTaskEditeble,
     taskEditeble,
     isNewTaskEdit,
-    toggleIsNewTaskEdit
+    toggleIsNewTaskEdit,
+    setActiveColumnTitle,
+    activeColumnTitle
   }
 })

@@ -1,13 +1,26 @@
-<script setup></script>
+<script setup>
+import InlineSvg from 'vue-inline-svg'
+const props = defineProps({
+  isshow: {
+    type: Boolean,
+    default: false
+  }
+})
+</script>
 
 <template>
-  <TransitionGroup name="list" tag="div" class="tooltip">
-    <span class="tooltip__title">
-      <slot name="tooltipTitle" />
-    </span>
-    <span class="tooltip__body">
-      <slot name="tooltipBody" />
-    </span>
+  <TransitionGroup name="list">
+    <div class="tooltip" v-if="isshow">
+      <!-- <button @click.stop="$emit('closeToo')" class="tooltip__closeButton">
+        <inline-svg src="../../src/assets/icn/icn-close.svg" />
+      </button> -->
+      <span class="tooltip__title">
+        <slot name="tooltipTitle" />
+      </span>
+      <span class="tooltip__body">
+        <slot name="tooltipBody" />
+      </span>
+    </div>
   </TransitionGroup>
 </template>
 
@@ -25,7 +38,21 @@
   border-radius: 7px 4px 4px 7px;
   border-left: solid 8px #22c33d;
   gap: 8px;
+  &__closeButton {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    border: none;
+    padding: 0;
+    background-color: #ffffff;
+    position: absolute;
+    right: 16px;
+    top: 16px;
 
+    &:hover path {
+      stroke: tomato;
+    }
+  }
   &::before {
     content: '';
     background-image: url('@/assets/icn/icn-tooltip.svg');

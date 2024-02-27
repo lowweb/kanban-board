@@ -7,13 +7,16 @@ import UToolTip from '../ui/UToolTip.vue'
 import { useBoardStore } from '@/stores/boardStore'
 import { useStateStore } from '@/stores/stateStore'
 import { useDialogStore } from '@/stores/dialogStore'
+import { useTooltipStore } from '@/stores/tooltipStore'
 const boardStore = useBoardStore()
 const stateStore = useStateStore()
 const dialogStore = useDialogStore()
+const tooltipStore = useTooltipStore()
 import InlineSvg from 'vue-inline-svg'
 
-const addNewTask = (columnId) => {
+const addNewTask = (columnId, columnTitle) => {
   stateStore.setActiveColumnId(columnId)
+  stateStore.setActiveColumnTitle(columnTitle)
   boardStore.addNewTask()
 }
 const deleteTask = () => {
@@ -41,13 +44,14 @@ const makeEdit = () => {
         :data="task.data"
         :taskId="task.id"
         :columnId="column.id"
+        :columnTitle="column.title"
         :draggable="!stateStore.taskEditeble"
       >
       </BTask>
       <UIconButton
         class="add-button"
         v-if="!(stateStore.taskEditeble && stateStore.activeColumnId === column.id)"
-        @click="addNewTask(column.id)"
+        @click="addNewTask(column.id, column.title)"
       >
         <template #iconButton>
           <inline-svg src="../../src/assets/icn/icn-task-add.svg" />
@@ -56,8 +60,10 @@ const makeEdit = () => {
       </UIconButton>
     </BColumn>
   </div>
-  <UToolTip>
-    <template #tooltipTitle>frefefref</template>
+  <UToolTip :isshow="tooltipStore.isShown" actionType="">
+    <template #tooltipTitle>{{
+      tooltipStore.actionName + ' ' + stateStore.activeColumnTitle
+    }}</template>
     <template #tooltipBody>{{ stateStore.activeTaskData }}</template>
   </UToolTip>
   <UContextMenu
