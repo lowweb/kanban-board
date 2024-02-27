@@ -1,20 +1,29 @@
 <script setup>
-import { computed } from 'vue'
 import BColumn from '@/components/blocks/BColumn.vue'
 import BTask from '@/components/blocks/BTask.vue'
-import UAddButton from '../ui/UAddButton.vue'
 import UContextMenu from '../ui/UContextMenu.vue'
+import UIconButton from '../ui/UIconButton.vue'
+import UToolTip from '../ui/UToolTip.vue'
 import { useBoardStore } from '@/stores/boardStore'
 import { useStateStore } from '@/stores/stateStore'
+import { useDialogStore } from '@/stores/dialogStore'
 const boardStore = useBoardStore()
 const stateStore = useStateStore()
+const dialogStore = useDialogStore()
+import InlineSvg from 'vue-inline-svg'
 
-const onAdd = (columnId) => {
+const addNewTask = (columnId) => {
   stateStore.setActiveColumnId(columnId)
-  // stateStore.toggleIsNewTaskEdit()
   boardStore.addNewTask()
 }
-
+const deleteTask = () => {
+  dialogStore.showDialog()
+  stateStore.hideContextMenu()
+}
+const makeEdit = () => {
+  stateStore.toggleTaskEditeble()
+  stateStore.hideContextMenu()
+}
 </script>
 
 <template>
@@ -35,17 +44,29 @@ const onAdd = (columnId) => {
         :draggable="!stateStore.taskEditeble"
       >
       </BTask>
-      <UAddButton
+      <UIconButton
+        class="add-button"
         v-if="!(stateStore.taskEditeble && stateStore.activeColumnId === column.id)"
-        @click="onAdd(column.id)"
-      />
+        @click="addNewTask(column.id)"
+      >
+        <template #iconButton>
+          <inline-svg src="../../src/assets/icn/icn-task-add.svg" />
+        </template>
+        <template #textButton> Добавить </template>
+      </UIconButton>
     </BColumn>
-    <UContextMenu
-      v-if="stateStore.contextMenu.show"
-      :x="stateStore.contextMenu.x"
-      :y="stateStore.contextMenu.y"
-    />
   </div>
+  <UToolTip>
+    <template #tooltipTitle>frefefref</template>
+    <template #tooltipBody>{{ stateStore.activeTaskData }}</template>
+  </UToolTip>
+  <UContextMenu
+    v-if="stateStore.contextMenu.show"
+    :x="stateStore.contextMenu.x"
+    :y="stateStore.contextMenu.y"
+    @deleteTask="deleteTask"
+    @makeEdit="makeEdit"
+  />
 </template>
 
 <style lang="scss">

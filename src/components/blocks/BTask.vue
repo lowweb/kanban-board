@@ -2,13 +2,10 @@
 import { ref, computed } from 'vue'
 import { useStateStore } from '@/stores/stateStore'
 const stateStore = useStateStore()
-import { useContextMenuStore } from '@/stores/contextMenuStore';
-const contextMenuStore = useContextMenuStore()
-import UMenuButton from '../ui/UMenuButton.vue'
-import UClearButton from '../ui/UClearButton.vue'
-import USaveButton from '../ui/USaveButton.vue'
 import BOverlay from './BOverlay.vue'
 import UTextArea from '../ui/UTextArea.vue'
+import UIconButton from '../ui/UIconButton.vue'
+import InlineSvg from 'vue-inline-svg'
 
 const props = defineProps({
   data: {
@@ -29,8 +26,8 @@ const textAreaDataValue = ref(props.data)
 const isEditebleAndEquilTask = computed(
   () => stateStore.taskEditeble && props.taskId === stateStore.activeTaskId
 )
-const showContextMenu = (event, taskId, columnId) => {
-  stateStore.showContextMenu(event.target.getBoundingClientRect(), taskId, columnId)
+const showContextMenu = (event, taskId, columnId, taskData) => {
+  stateStore.showContextMenu(event.target.getBoundingClientRect(), taskId, columnId, taskData)
 }
 const hideContextMenu = () => {
   stateStore.hideContextMenu()
@@ -38,6 +35,7 @@ const hideContextMenu = () => {
 
 const saveTaskChanges = () => {
   stateStore.toggleTaskEditeble()
+  stateStore.setActiveTaskData(textAreaDataValue.value)
 }
 
 const clearTaskDataValue = () => {
@@ -54,13 +52,25 @@ const clearTaskDataValue = () => {
       placeholder="Введите текст..."
     />
     <div class="task__button">
-      <UMenuButton
-        class="task__menu"
-        @click.stop="showContextMenu($event, taskId, columnId)"
+      <UIconButton
+        class="menu-button"
+        @click.stop="showContextMenu($event, taskId, columnId, data)"
         v-if="!isEditebleAndEquilTask"
-      />
-      <UClearButton v-if="isEditebleAndEquilTask" @click.stop="clearTaskDataValue" />
-      <USaveButton v-if="isEditebleAndEquilTask" @click.stop="saveTaskChanges" />
+      >
+        <template #iconButton>
+          <inline-svg src="../../src/assets/icn/icn-submenu.svg" />
+        </template>
+      </UIconButton>
+      <UIconButton v-if="isEditebleAndEquilTask" @click.stop="clearTaskDataValue">
+        <template #iconButton>
+          <inline-svg src="../../src/assets/icn/icn-task-del.svg" />
+        </template>
+      </UIconButton>
+      <UIconButton v-if="isEditebleAndEquilTask" @click.stop="saveTaskChanges">
+        <template #iconButton>
+          <inline-svg src="../../src/assets/icn/icn-task-save.svg" />
+        </template>
+      </UIconButton>
     </div>
 
     <BOverlay @click="hideContextMenu" v-if="stateStore.contextMenu.show" />
