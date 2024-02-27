@@ -14,9 +14,7 @@ const props = defineProps({
 <template>
   <div class="column">
     <div class="column__title" :style="`--title-color: ${titleColor}`">{{ title }}</div>
-    <div class="column__body">
-      <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 

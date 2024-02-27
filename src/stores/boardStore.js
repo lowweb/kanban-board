@@ -5,7 +5,7 @@ import { useStateStore } from './stateStore'
 export const useBoardStore = defineStore('boardStore', () => {
   const stateStore = useStateStore()
   const board = ref([])
-  // заглышка для создание новых записей 
+  // заглышка для создание новых записей
   const maxId = ref(8)
   const getBoard = async () => {
     // loader.value = true;
@@ -25,14 +25,24 @@ export const useBoardStore = defineStore('boardStore', () => {
     board.value.find((column) => column.id === stateStore.activeColumnId).tasks = newElements
   }
   const addNewTask = () => {
-    if (!board.value.find((column) => column.id === stateStore.activeColumnId).hasOwnProperty("tasks")) {
-      board.value.find((column) => column.id === stateStore.activeColumnId).tasks=[]
+    if (
+      !board.value.find((column) => column.id === stateStore.activeColumnId).hasOwnProperty('tasks')
+    ) {
+      board.value.find((column) => column.id === stateStore.activeColumnId).tasks = []
     }
 
-  board.value.find((column) => column.id === stateStore.activeColumnId).tasks.push({'id': maxId.value, "data" : ""})
-  stateStore.setActiveTaskId(maxId.value++)
-  stateStore.toggleTaskEditeble()
-  stateStore.toggleIsNewTaskEdit()
+    board.value
+      .find((column) => column.id === stateStore.activeColumnId)
+      .tasks.push({ id: maxId.value, data: '' })
+    stateStore.setActiveTaskId(maxId.value++)
+    stateStore.toggleTaskEditeble()
+    stateStore.toggleIsNewTaskEdit()
+  }
+
+  const saveTaskChanges = (data) => {
+    board.value
+      .find((column) => column.id === stateStore.activeColumnId)
+      .tasks.find((task) => task.id === stateStore.activeTaskId).data = 'hjkhjkhkj'
   }
 
   return {
@@ -40,6 +50,7 @@ export const useBoardStore = defineStore('boardStore', () => {
     maxId,
     getBoard,
     deleteTask,
-    addNewTask
+    addNewTask,
+    saveTaskChanges
   }
 })

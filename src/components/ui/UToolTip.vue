@@ -11,9 +11,9 @@ const props = defineProps({
 <template>
   <TransitionGroup name="list">
     <div class="tooltip" v-if="isshow">
-      <!-- <button @click.stop="$emit('closeToo')" class="tooltip__closeButton">
+      <button @click.stop="$emit('closeTooltip')" class="tooltip__closeButton">
         <inline-svg src="../../src/assets/icn/icn-close.svg" />
-      </button> -->
+      </button>
       <span class="tooltip__title">
         <slot name="tooltipTitle" />
       </span>

@@ -33,7 +33,8 @@
   {
     "id": 2,
     "title": "Новые",
-    "titleColor": "#66B8FF"
+    "titleColor": "#66B8FF",
+    "tasks": []
   },
   {
     "id": 3,
@@ -50,12 +51,14 @@
   {
     "id": 4,
     "title": "Готово",
-    "titleColor": "#22C33D"
+    "titleColor": "#22C33D",
+    "tasks": []
   },
   {
     "id": 5,
     "title": "Доработать",
-    "titleColor": "#F53D5C"
+    "titleColor": "#F53D5C",
+    "tasks": []
   }
 
 ]

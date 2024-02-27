@@ -1,9 +1,9 @@
 <script setup></script>
 
 <template>
-  <span class="button">
+  <button class="button">
     <slot></slot>
-  </span>
+  </button>
 </template>
 
 <style lang="scss">
@@ -17,6 +17,7 @@
   line-height: 18px;
   text-align: center;
   color: #1c2530;
+  background-color: #ffffff;
 
   &:hover {
     background-color: #c3cad3;

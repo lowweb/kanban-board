@@ -2,8 +2,10 @@
 import { ref, computed } from 'vue'
 import { useStateStore } from '@/stores/stateStore'
 import { useTooltipStore } from '@/stores/tooltipStore'
+import { useBoardStore } from '@/stores/boardStore'
 const stateStore = useStateStore()
 const tooltipStore = useTooltipStore()
+const boardStore = useBoardStore()
 import BOverlay from './BOverlay.vue'
 import UTextArea from '../ui/UTextArea.vue'
 import UIconButton from '../ui/UIconButton.vue'
@@ -48,6 +50,7 @@ const hideContextMenu = () => {
 const saveTaskChanges = () => {
   stateStore.toggleTaskEditeble()
   stateStore.setActiveTaskData(textAreaDataValue.value)
+  boardStore.saveTaskChanges(textAreaDataValue.value)
   tooltipStore.showTooltip('Задача создана/отредактированна в')
 }
 

@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import BColumn from '@/components/blocks/BColumn.vue'
 import BTask from '@/components/blocks/BTask.vue'
 import UContextMenu from '../ui/UContextMenu.vue'
@@ -13,6 +14,7 @@ const stateStore = useStateStore()
 const dialogStore = useDialogStore()
 const tooltipStore = useTooltipStore()
 import InlineSvg from 'vue-inline-svg'
+import draggable from 'vuedraggable'
 
 const addNewTask = (columnId, columnTitle) => {
   stateStore.setActiveColumnId(columnId)
@@ -36,18 +38,20 @@ const makeEdit = () => {
       v-bind:key="column.id"
       :title="column.title"
       :titleColor="column.titleColor"
-      @dragover.prevent
     >
-      <BTask
-        v-for="task in column.tasks"
-        :key="task.id"
-        :data="task.data"
-        :taskId="task.id"
-        :columnId="column.id"
-        :columnTitle="column.title"
-        :draggable="!stateStore.taskEditeble"
-      >
-      </BTask>
+      <draggable v-model="column.tasks" group="tasks" item-key="id" class="column__body">
+        <template #item="{ element: task }">
+          <BTask
+            :key="task.id"
+            :data="task.data"
+            :taskId="task.id"
+            :columnId="column.id"
+            :columnTitle="column.title"
+          >
+          </BTask>
+        </template>
+      </draggable>
+
       <UIconButton
         class="add-button"
         v-if="!(stateStore.taskEditeble && stateStore.activeColumnId === column.id)"
@@ -60,7 +64,7 @@ const makeEdit = () => {
       </UIconButton>
     </BColumn>
   </div>
-  <UToolTip :isshow="tooltipStore.isShown" actionType="">
+  <UToolTip :isshow="tooltipStore.isShown">
     <template #tooltipTitle>{{
       tooltipStore.actionName + ' ' + stateStore.activeColumnTitle
     }}</template>
