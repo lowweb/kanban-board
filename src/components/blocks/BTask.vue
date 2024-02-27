@@ -2,6 +2,8 @@
 import { ref, computed } from 'vue'
 import { useStateStore } from '@/stores/stateStore'
 const stateStore = useStateStore()
+import { useContextMenuStore } from '@/stores/contextMenuStore';
+const contextMenuStore = useContextMenuStore()
 import UMenuButton from '../ui/UMenuButton.vue'
 import UClearButton from '../ui/UClearButton.vue'
 import USaveButton from '../ui/USaveButton.vue'
@@ -55,7 +57,7 @@ const clearTaskDataValue = () => {
       <UMenuButton
         class="task__menu"
         @click.stop="showContextMenu($event, taskId, columnId)"
-        v-if="!stateStore.taskEditeble"
+        v-if="!isEditebleAndEquilTask"
       />
       <UClearButton v-if="isEditebleAndEquilTask" @click.stop="clearTaskDataValue" />
       <USaveButton v-if="isEditebleAndEquilTask" @click.stop="saveTaskChanges" />

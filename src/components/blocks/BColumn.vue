@@ -47,6 +47,10 @@ const props = defineProps({
     flex-direction: column;
     gap: 8px;
     overflow: scroll;
+
+    &:last-child {
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

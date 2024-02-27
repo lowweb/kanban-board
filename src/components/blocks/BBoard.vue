@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import BColumn from '@/components/blocks/BColumn.vue'
 import BTask from '@/components/blocks/BTask.vue'
 import UAddButton from '../ui/UAddButton.vue'
@@ -10,37 +11,32 @@ const stateStore = useStateStore()
 
 const onAdd = (columnId) => {
   stateStore.setActiveColumnId(columnId)
-  stateStore.toggleIsNewTaskEdit()
+  // stateStore.toggleIsNewTaskEdit()
+  boardStore.addNewTask()
 }
+
 </script>
 
 <template>
   <div class="board">
     <BColumn
-      v-for="(column, columnIndex) in boardStore.board"
+      v-for="column in boardStore.board"
       v-bind:key="column.id"
       :title="column.title"
       :titleColor="column.titleColor"
       @dragover.prevent
     >
       <BTask
-        v-for="(task, taskIndex) in column.tasks"
+        v-for="task in column.tasks"
         :key="task.id"
         :data="task.data"
         :taskId="task.id"
         :columnId="column.id"
-        draggable="true"
-      >
-      </BTask>
-      <BTask
-        v-if="stateStore.isNewTaskEdit && column.id === stateStore.activeColumnId"
-        :taskId="12321"
-        :columnId="column.id"
-        draggable="true"
+        :draggable="!stateStore.taskEditeble"
       >
       </BTask>
       <UAddButton
-        v-if="!stateStore.isNewTaskEdit && column.id != stateStore.activeColumnId"
+        v-if="!(stateStore.taskEditeble && stateStore.activeColumnId === column.id)"
         @click="onAdd(column.id)"
       />
     </BColumn>

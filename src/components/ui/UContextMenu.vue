@@ -1,8 +1,10 @@
 <script setup>
 import { useStateStore } from '@/stores/stateStore'
 import { useBoardStore } from '@/stores/boardStore'
+import { useContextMenuStore } from '@/stores/contextMenuStore';
 const stateStore = useStateStore()
 const boardStore = useBoardStore()
+const contextMenuStore = useContextMenuStore()
 const makeEdit = () => {
   stateStore.toggleTaskEditeble()
   stateStore.hideContextMenu()
