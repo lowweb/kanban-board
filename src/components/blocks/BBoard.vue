@@ -20,6 +20,7 @@ const deleteTask = () => {
   dialogStore.showDialog()
   stateStore.hideContextMenu()
 }
+
 const makeEdit = () => {
   stateStore.toggleTaskEditable()
   stateStore.hideContextMenu()
@@ -29,9 +30,6 @@ const onEndDrag = (evt) => {
   stateStore.setActiveColumnTitle(evt.to.dataset.column)
   stateStore.setActiveTaskData(evt.item.firstChild.dataset.value)
   tooltipStore.showTooltip('Задача перенесенна в ')
-}
-const closeTooltip = () => {
-  tooltipStore.hideTooltip()
 }
 </script>
 
@@ -76,7 +74,7 @@ const closeTooltip = () => {
       </draggable>
     </BColumn>
   </div>
-  <UToolTip :isshow="tooltipStore.isShown" @closeTooltip="closeTooltip">
+  <UToolTip :isshow="tooltipStore.isShown" @closeTooltip="tooltipStore.hideTooltip()">
     <template #tooltipTitle>{{
       tooltipStore.actionName + ' ' + stateStore.activeColumnTitle
     }}</template>

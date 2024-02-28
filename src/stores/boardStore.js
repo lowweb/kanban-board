@@ -5,10 +5,10 @@ import { useStateStore } from './stateStore'
 export const useBoardStore = defineStore('boardStore', () => {
   const stateStore = useStateStore()
   const board = ref([])
-  // заглышка для создание новых записей
+  //заглушка фиктивный генератор id для заданий
   const maxId = ref(8)
+
   const getBoard = async () => {
-    // loader.value = true;
     try {
       const res = await fetch('../../src/api/board.json')
       const data = await res.json()
@@ -28,12 +28,6 @@ export const useBoardStore = defineStore('boardStore', () => {
   const addNewTask = (columnId, columnTitle) => {
     stateStore.setActiveColumnId(columnId)
     stateStore.setActiveColumnTitle(columnTitle)
-    if (
-      !board.value.find((column) => column.id === stateStore.activeColumnId).hasOwnProperty('tasks')
-    ) {
-      board.value.find((column) => column.id === stateStore.activeColumnId).tasks = []
-    }
-
     board.value
       .find((column) => column.id === stateStore.activeColumnId)
       .tasks.push({ id: maxId.value, data: '' })

@@ -34,18 +34,6 @@ const textAreaDataValue = ref(props.data)
 const isEditebleAndEquilTask = computed(
   () => stateStore.taskEditable && props.taskId === stateStore.activeTaskId
 )
-const showContextMenu = (event, taskId, columnId, taskData, columnTitle) => {
-  stateStore.showContextMenu(
-    event.target.getBoundingClientRect(),
-    taskId,
-    columnId,
-    taskData,
-    columnTitle
-  )
-}
-const hideContextMenu = () => {
-  stateStore.hideContextMenu()
-}
 
 const saveTaskChanges = () => {
   stateStore.toggleTaskEditable()
@@ -70,7 +58,7 @@ const clearTaskDataValue = () => {
     <div class="task__button">
       <UIconButton
         class="menu-button"
-        @click.stop="showContextMenu($event, taskId, columnId, data, columnTitle)"
+        @click.stop="stateStore.showContextMenu($event, taskId, columnId, data, columnTitle)"
         v-if="!isEditebleAndEquilTask"
       >
         <template #iconButton>
@@ -89,7 +77,7 @@ const clearTaskDataValue = () => {
       </UIconButton>
     </div>
 
-    <BOverlay @click="hideContextMenu" v-if="stateStore.contextMenu.show" />
+    <BOverlay @click="stateStore.hideContextMenu" v-if="stateStore.contextMenu.show" />
   </div>
 </template>
 
