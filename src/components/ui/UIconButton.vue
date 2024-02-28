@@ -17,6 +17,7 @@
 }
 .menu-button {
   z-index: 3;
+  height: 12px;
   &:hover path {
     stroke: var(--color-dark-blue);
   }

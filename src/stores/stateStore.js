@@ -2,7 +2,6 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useStateStore = defineStore('stateStore', () => {
-  const contextMenu = ref({ show: false, x: 0, y: 0 })
   const activeTaskId = ref()
   const activeColumnId = ref()
   const activeTaskData = ref()
@@ -10,16 +9,6 @@ export const useStateStore = defineStore('stateStore', () => {
   const taskEditable = ref(false)
   const newTaskEditable = ref(false)
 
-  const showContextMenu = (event, taskId, columnId, taskData, columnTitle) => {
-    const el = event.target.getBoundingClientRect()
-    contextMenu.value.show = true
-    contextMenu.value.x = el.left
-    contextMenu.value.y = el.top + 20
-    setActiveColumnId(columnId)
-    setActiveColumnTitle(columnTitle)
-    setActiveTaskId(taskId)
-    setActiveTaskData(taskData)
-  }
   const toggleTaskEditable = () => {
     taskEditable.value = !taskEditable.value
   }
@@ -38,25 +27,20 @@ export const useStateStore = defineStore('stateStore', () => {
   const setActiveColumnTitle = (data) => {
     activeColumnTitle.value = data
   }
-  const hideContextMenu = () => {
-    contextMenu.value.show = false
-  }
 
   return {
-    contextMenu,
+    // contextMenu,
     activeTaskId,
     activeColumnId,
+    activeColumnTitle,
     activeTaskData,
-    setActiveTaskData,
-    showContextMenu,
-    setActiveTaskId,
-    setActiveColumnId,
-    hideContextMenu,
-    toggleTaskEditable,
     taskEditable,
     newTaskEditable,
+    setActiveTaskData,
+    setActiveTaskId,
+    setActiveColumnId,
+    toggleTaskEditable,
     toggleNewTaskEditable,
-    setActiveColumnTitle,
-    activeColumnTitle
+    setActiveColumnTitle
   }
 })

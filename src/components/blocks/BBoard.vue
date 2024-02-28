@@ -1,29 +1,31 @@
 <script setup>
-import { ref } from 'vue'
 import BColumn from '@/components/blocks/BColumn.vue'
 import BTask from '@/components/blocks/BTask.vue'
 import UContextMenu from '../ui/UContextMenu.vue'
 import UIconButton from '../ui/UIconButton.vue'
 import UToolTip from '../ui/UToolTip.vue'
+
 import { useBoardStore } from '@/stores/boardStore'
 import { useStateStore } from '@/stores/stateStore'
 import { useDialogStore } from '@/stores/dialogStore'
 import { useTooltipStore } from '@/stores/tooltipStore'
+import { useContextMenuStore } from '@/stores/contextMenuStore'
 const boardStore = useBoardStore()
 const stateStore = useStateStore()
 const dialogStore = useDialogStore()
 const tooltipStore = useTooltipStore()
+const contextMenuStore = useContextMenuStore()
 import InlineSvg from 'vue-inline-svg'
 import draggable from 'vuedraggable'
 
 const deleteTask = () => {
   dialogStore.showDialog()
-  stateStore.hideContextMenu()
+  contextMenuStore.hideContextMenu()
 }
 
-const makeEdit = () => {
+const makeTaskEditable = () => {
   stateStore.toggleTaskEditable()
-  stateStore.hideContextMenu()
+  contextMenuStore.hideContextMenu()
 }
 
 const onEndDrag = (evt) => {
@@ -74,18 +76,18 @@ const onEndDrag = (evt) => {
       </draggable>
     </BColumn>
   </div>
-  <UToolTip :isshow="tooltipStore.isShown" @closeTooltip="tooltipStore.hideTooltip()">
+  <UToolTip :isshow="tooltipStore.isShown" @closeTooltip="tooltipStore.hideTooltip">
     <template #tooltipTitle>{{
       tooltipStore.actionName + ' ' + stateStore.activeColumnTitle
     }}</template>
     <template #tooltipBody>{{ stateStore.activeTaskData }}</template>
   </UToolTip>
   <UContextMenu
-    v-if="stateStore.contextMenu.show"
-    :x="stateStore.contextMenu.x"
-    :y="stateStore.contextMenu.y"
+    v-if="contextMenuStore.contextMenu.show"
+    :x="contextMenuStore.contextMenu.x"
+    :y="contextMenuStore.contextMenu.y"
     @deleteTask="deleteTask"
-    @makeEdit="makeEdit"
+    @makeEdit="makeTaskEditable"
   />
 </template>
 

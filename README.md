@@ -1,35 +1,21 @@
 # mir-test
 
-This template should help get you started developing with Vue 3 in Vite.
+Тестовое задание для компании ООО "МИР"
 
-## Recommended IDE Setup
+## Декомпозиция
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Анализ дизайн макета - 30 минут
+Проработка логики поведенческой модели проекта 1 час
+Подготовка контента для проекта - 1 час
+Первичная инициализация проекта/ базовые стили/ базовые цвета / базовая разметка 2 часа
+Реализация ui компонента UButton 30 мин
+Реализация ui компонента UIconButton 40 мин
+Реализация ui компонента UContextMenu 1 час 30 минут
+Реализация ui компонента UToolTip 2 часа
+Реализация ui компонента UDialog 50 мин
+Реализация компонента BBoard 2 часа 30 минут
+Реализация компонента BColumn 30 минут
+Реализация компонента BTask 3 часа
+Реализация компонента Textarea 2 часа
+Реализаци механизма dragAndDrop 1 час 30 минут
+Оптимизация кода 2 часа

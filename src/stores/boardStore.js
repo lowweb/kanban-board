@@ -5,7 +5,7 @@ import { useStateStore } from './stateStore'
 export const useBoardStore = defineStore('boardStore', () => {
   const stateStore = useStateStore()
   const board = ref([])
-  //заглушка фиктивный генератор id для заданий
+  //заглушка - фиктивный генератор id для заданий
   const maxId = ref(8)
 
   const getBoard = async () => {

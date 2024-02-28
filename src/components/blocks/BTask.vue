@@ -3,9 +3,11 @@ import { ref, computed } from 'vue'
 import { useStateStore } from '@/stores/stateStore'
 import { useTooltipStore } from '@/stores/tooltipStore'
 import { useBoardStore } from '@/stores/boardStore'
+import { useContextMenuStore } from '@/stores/contextMenuStore'
 const stateStore = useStateStore()
 const tooltipStore = useTooltipStore()
 const boardStore = useBoardStore()
+const contextMenuStore = useContextMenuStore()
 import BOverlay from './BOverlay.vue'
 import UTextArea from '../ui/UTextArea.vue'
 import UIconButton from '../ui/UIconButton.vue'
@@ -58,7 +60,7 @@ const clearTaskDataValue = () => {
     <div class="task__button">
       <UIconButton
         class="menu-button"
-        @click.stop="stateStore.showContextMenu($event, taskId, columnId, data, columnTitle)"
+        @click.stop="contextMenuStore.showContextMenu($event, taskId, columnId, data, columnTitle)"
         v-if="!isEditebleAndEquilTask"
       >
         <template #iconButton>
@@ -77,7 +79,7 @@ const clearTaskDataValue = () => {
       </UIconButton>
     </div>
 
-    <BOverlay @click="stateStore.hideContextMenu" v-if="stateStore.contextMenu.show" />
+    <BOverlay @click="contextMenuStore.hideContextMenu" v-if="contextMenuStore.contextMenu.show" />
   </div>
 </template>
 
