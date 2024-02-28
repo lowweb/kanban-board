@@ -32,11 +32,11 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   width: 400px;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   box-shadow: 0px 0px 16px rgba(10, 10, 100, 0.08);
   padding: 16px 28px 16px 64px;
   border-radius: 7px 4px 4px 7px;
-  border-left: solid 8px #22c33d;
+  border-left: solid 8px var(--color-green);
   gap: 8px;
   &__closeButton {
     width: 24px;
@@ -44,13 +44,13 @@ const props = defineProps({
     display: flex;
     border: none;
     padding: 0;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     position: absolute;
     right: 8px;
     top: 8px;
 
     &:hover path {
-      stroke: tomato;
+      stroke: var(--color-light-red);
     }
   }
   &::before {

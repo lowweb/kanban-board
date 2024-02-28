@@ -104,12 +104,12 @@ const clearTaskDataValue = () => {
   text-align: left;
   padding: 8px 4px 8px 8px;
   border-radius: 4px;
-  border: 1px solid #e3e5e8;
+  border: 1px solid var(--color-smoke-white);
   height: fit-content;
-  background: #ffffff;
+  background: var(--color-white);
 
   &--edit {
-    border: 1px solid #3d86f4;
+    border: 1px solid var(--color-dark-blue);
   }
 
   &__data {
@@ -136,9 +136,6 @@ const clearTaskDataValue = () => {
   }
 
   &__button {
-    // position: absolute;
-    // right: 4px;
-    // top: 4px;
     margin-left: auto;
     display: flex;
     flex-direction: column;

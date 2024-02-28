@@ -39,13 +39,13 @@ const props = defineProps({
     display: flex;
     border: none;
     padding: 0;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     position: absolute;
     right: 16px;
     top: 16px;
 
     &:hover path {
-      stroke: tomato;
+      stroke: var(--color-light-red);
     }
   }
   &__content {
@@ -55,9 +55,9 @@ const props = defineProps({
     padding: 24px 40px 40px 40px;
     gap: 24px;
     flex-direction: column;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     border-radius: 8px;
-    color: #1c2530;
+    color: var(--color-black);
     max-width: 527px;
     box-shadow:
       0px 32px 48px rgba(0, 0, 0, 0.16),

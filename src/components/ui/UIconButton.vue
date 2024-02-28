@@ -18,7 +18,7 @@
 .menu-button {
   z-index: 3;
   &:hover path {
-    stroke: #3d86f4;
+    stroke: var(--color-dark-blue);
   }
 }
 
@@ -27,7 +27,7 @@
   font-size: 14px;
   line-height: 18px;
   text-align: center;
-  color: #3d86f4;
+  color: var(--color-dark-blue);
   cursor: pointer;
   gap: 8px;
 }

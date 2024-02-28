@@ -29,7 +29,6 @@ const props = defineProps({
 
   &__title {
     padding: 7px 32px;
-    background-color: tomato;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     background-color: var(--title-color);

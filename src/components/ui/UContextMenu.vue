@@ -29,9 +29,9 @@ const props = defineProps({
   position: fixed;
   list-style: none;
   padding: 8px 0;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   z-index: 3;
-  border: 1px solid #e3e5e8;
+  border: 1px solid var(--color-smoke-white);
   border-radius: 4px;
   box-shadow:
     0px 8px 16px rgba(0, 0, 0, 0.06),
@@ -43,7 +43,7 @@ const props = defineProps({
     gap: 8px;
 
     &:hover {
-      background-color: #e1f1ff;
+      background-color: var(--color-smoke-white2);
     }
   }
 }

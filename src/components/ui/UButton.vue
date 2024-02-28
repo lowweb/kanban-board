@@ -9,7 +9,7 @@
 <style lang="scss">
 .button {
   padding: 9px 75px;
-  border: 1px solid #c4cad4;
+  border: 1px solid var(--color-dark-grey);
   border-radius: 4px;
   font-style: normal;
   font-weight: 400;
@@ -17,10 +17,10 @@
   line-height: 18px;
   text-align: center;
   color: #1c2530;
-  background-color: #ffffff;
+  background-color: var(--color-white);
 
   &:hover {
-    background-color: #c3cad3;
+    background-color: var(--color-smoke-white);
   }
 }
 </style>
