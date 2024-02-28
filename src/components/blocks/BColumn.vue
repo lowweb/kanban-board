@@ -29,7 +29,6 @@ const props = defineProps({
 
   &__title {
     padding: 7px 32px;
-    height: 32px;
     background-color: tomato;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
@@ -44,7 +43,8 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     gap: 8px;
-    overflow: scroll;
+    overflow-y: scroll;
+    height: 100%;
 
     &:last-child {
       margin-bottom: 20px;

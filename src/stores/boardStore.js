@@ -42,7 +42,7 @@ export const useBoardStore = defineStore('boardStore', () => {
   const saveTaskChanges = (data) => {
     board.value
       .find((column) => column.id === stateStore.activeColumnId)
-      .tasks.find((task) => task.id === stateStore.activeTaskId).data = 'hjkhjkhkj'
+      .tasks.find((task) => task.id === stateStore.activeTaskId).data = data
   }
 
   return {

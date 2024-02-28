@@ -29,6 +29,13 @@ const makeEdit = () => {
   stateStore.toggleTaskEditeble()
   stateStore.hideContextMenu()
 }
+
+const onEndDrag = (evt) => {
+  stateStore.setActiveColumnTitle(evt.to.dataset.column)
+  stateStore.setActiveTaskData(evt.item.firstChild.dataset.value)
+  tooltipStore.showTooltip('Задача перенесенна в ')
+}
+// onEndDrag($event.item.firstChild.dataset.value, column.title)
 </script>
 
 <template>
@@ -39,7 +46,14 @@ const makeEdit = () => {
       :title="column.title"
       :titleColor="column.titleColor"
     >
-      <draggable v-model="column.tasks" group="tasks" item-key="id" class="column__body">
+      <draggable
+        v-model="column.tasks"
+        group="tasks"
+        item-key="id"
+        class="column__body"
+        :data-column="column.title"
+        @end="onEndDrag"
+      >
         <template #item="{ element: task }">
           <BTask
             :key="task.id"
@@ -50,18 +64,19 @@ const makeEdit = () => {
           >
           </BTask>
         </template>
-      </draggable>
-
-      <UIconButton
-        class="add-button"
-        v-if="!(stateStore.taskEditeble && stateStore.activeColumnId === column.id)"
-        @click="addNewTask(column.id, column.title)"
-      >
-        <template #iconButton>
-          <inline-svg src="../../src/assets/icn/icn-task-add.svg" />
+        <template #footer>
+          <UIconButton
+            class="add-button"
+            v-if="!(stateStore.taskEditeble && stateStore.activeColumnId === column.id)"
+            @click="addNewTask(column.id, column.title)"
+          >
+            <template #iconButton>
+              <inline-svg src="../../src/assets/icn/icn-task-add.svg" />
+            </template>
+            <template #textButton> Добавить </template>
+          </UIconButton>
         </template>
-        <template #textButton> Добавить </template>
-      </UIconButton>
+      </draggable>
     </BColumn>
   </div>
   <UToolTip :isshow="tooltipStore.isShown">
