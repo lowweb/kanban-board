@@ -16,17 +16,12 @@ const tooltipStore = useTooltipStore()
 import InlineSvg from 'vue-inline-svg'
 import draggable from 'vuedraggable'
 
-const addNewTask = (columnId, columnTitle) => {
-  stateStore.setActiveColumnId(columnId)
-  stateStore.setActiveColumnTitle(columnTitle)
-  boardStore.addNewTask()
-}
 const deleteTask = () => {
   dialogStore.showDialog()
   stateStore.hideContextMenu()
 }
 const makeEdit = () => {
-  stateStore.toggleTaskEditeble()
+  stateStore.toggleTaskEditable()
   stateStore.hideContextMenu()
 }
 
@@ -35,7 +30,9 @@ const onEndDrag = (evt) => {
   stateStore.setActiveTaskData(evt.item.firstChild.dataset.value)
   tooltipStore.showTooltip('Задача перенесенна в ')
 }
-// onEndDrag($event.item.firstChild.dataset.value, column.title)
+const closeTooltip = () => {
+  tooltipStore.hideTooltip()
+}
 </script>
 
 <template>
@@ -67,8 +64,8 @@ const onEndDrag = (evt) => {
         <template #footer>
           <UIconButton
             class="add-button"
-            v-if="!(stateStore.taskEditeble && stateStore.activeColumnId === column.id)"
-            @click="addNewTask(column.id, column.title)"
+            v-if="!(stateStore.taskEditable && stateStore.activeColumnId === column.id)"
+            @click="boardStore.addNewTask(column.id, column.title)"
           >
             <template #iconButton>
               <inline-svg src="../../src/assets/icn/icn-task-add.svg" />
@@ -79,7 +76,7 @@ const onEndDrag = (evt) => {
       </draggable>
     </BColumn>
   </div>
-  <UToolTip :isshow="tooltipStore.isShown">
+  <UToolTip :isshow="tooltipStore.isShown" @closeTooltip="closeTooltip">
     <template #tooltipTitle>{{
       tooltipStore.actionName + ' ' + stateStore.activeColumnTitle
     }}</template>

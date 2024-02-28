@@ -46,8 +46,8 @@ const props = defineProps({
     padding: 0;
     background-color: #ffffff;
     position: absolute;
-    right: 16px;
-    top: 16px;
+    right: 8px;
+    top: 8px;
 
     &:hover path {
       stroke: tomato;

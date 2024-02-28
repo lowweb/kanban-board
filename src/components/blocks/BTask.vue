@@ -32,7 +32,7 @@ const props = defineProps({
 const textAreaDataValue = ref(props.data)
 
 const isEditebleAndEquilTask = computed(
-  () => stateStore.taskEditeble && props.taskId === stateStore.activeTaskId
+  () => stateStore.taskEditable && props.taskId === stateStore.activeTaskId
 )
 const showContextMenu = (event, taskId, columnId, taskData, columnTitle) => {
   stateStore.showContextMenu(
@@ -48,7 +48,7 @@ const hideContextMenu = () => {
 }
 
 const saveTaskChanges = () => {
-  stateStore.toggleTaskEditeble()
+  stateStore.toggleTaskEditable()
   stateStore.setActiveTaskData(textAreaDataValue.value)
   boardStore.saveTaskChanges(textAreaDataValue.value)
   tooltipStore.showTooltip('Задача создана/отредактированна в')
@@ -64,7 +64,7 @@ const clearTaskDataValue = () => {
     <UTextArea
       v-model="textAreaDataValue"
       :data-value="textAreaDataValue"
-      :readonly="!stateStore.taskEditeble"
+      :readonly="!stateStore.taskEditable"
       placeholder="Введите текст..."
     />
     <div class="task__button">

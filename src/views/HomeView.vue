@@ -3,11 +3,10 @@ import BBoard from '@/components/blocks/BBoard.vue'
 import UDialog from '@/components/ui/UDialog.vue'
 import UButton from '@/components/ui/UButton.vue'
 import { useTooltipStore } from '@/stores/tooltipStore'
-const tooltipStore = useTooltipStore()
 import { useStateStore } from '@/stores/stateStore'
 import { useDialogStore } from '@/stores/dialogStore'
 import { useBoardStore } from '@/stores/boardStore'
-
+const tooltipStore = useTooltipStore()
 const stateStore = useStateStore()
 const dialogStore = useDialogStore()
 const boardStore = useBoardStore()

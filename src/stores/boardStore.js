@@ -24,7 +24,10 @@ export const useBoardStore = defineStore('boardStore', () => {
       .tasks.filter((task) => task.id != stateStore.activeTaskId)
     board.value.find((column) => column.id === stateStore.activeColumnId).tasks = newElements
   }
-  const addNewTask = () => {
+
+  const addNewTask = (columnId, columnTitle) => {
+    stateStore.setActiveColumnId(columnId)
+    stateStore.setActiveColumnTitle(columnTitle)
     if (
       !board.value.find((column) => column.id === stateStore.activeColumnId).hasOwnProperty('tasks')
     ) {
@@ -35,8 +38,8 @@ export const useBoardStore = defineStore('boardStore', () => {
       .find((column) => column.id === stateStore.activeColumnId)
       .tasks.push({ id: maxId.value, data: '' })
     stateStore.setActiveTaskId(maxId.value++)
-    stateStore.toggleTaskEditeble()
-    stateStore.toggleIsNewTaskEdit()
+    stateStore.toggleTaskEditable()
+    stateStore.toggleNewTaskEditable()
   }
 
   const saveTaskChanges = (data) => {
