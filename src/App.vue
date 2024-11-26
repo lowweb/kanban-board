@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
 const boardStore = useBoardStore()
 onMounted(() => {
-  boardStore.getBoard()
+  // boardStore.getBoard()
 })
 </script>
 
